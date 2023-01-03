@@ -22,7 +22,6 @@ export async function handleSignup(eventBody) {
         (parseFloat(agreementAmount) + parseFloat(addOnTotalAmount)) * 100;
 
     // Send first transfer request
-    const firstBillDate = currentSeconds();
     const result = signSendTransfer({
         invoiceId: `${email}-${plan}-${addOnPlans}-0`,
         itemId: planId,
@@ -30,7 +29,6 @@ export async function handleSignup(eventBody) {
         toAddress: toAddress,
         tokenAddress: paymentTokenAddress,
         amount: totalFirstBillingAmountCents,
-        billDate: firstBillDate,
         usd: true,
     });
     console.log(await result);
@@ -41,6 +39,7 @@ export async function handleSignup(eventBody) {
     // in the webhook and the different functions in the SDK.
     // This is optional and up to you on how you want to handle the
     // subsequent transfer requests.
+    const firstBillDate = currentSeconds();
     const billingPeriodSeconds =
         frequencyNumber * frequencyUnitToSeconds(frequencyUnit);
     if (billingPeriodSeconds > 0) {

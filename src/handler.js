@@ -1,11 +1,16 @@
+import { handleTransferProcessed } from "./transferProcessed.js";
 import { handleSignup } from "./signup.js";
+import { verifyWebhook } from "loop-sdk";
 
 export async function incoming(event, context, callback) {
-    // TODO: validate secret? need instructions on how to do that
+    const signature = event.headers["loop-signature"];
+    const validWebhook = verifyWebhook(event.body, signature);
+    if (!validWebhook) {
+        throw new Error("Invalid request signature");
+    }
 
     const body = JSON.parse(event.body);
     const { event: webhookType, networkId, contractAddress } = body;
-
     if (networkId != process.env.LOOP_CONTRACT_NETWORK_ID) {
         throw new Error("Mismatched network ID");
     }
@@ -16,11 +21,15 @@ export async function incoming(event, context, callback) {
     switch (webhookType) {
         case "SubscriptionSignedUp":
             handleSignup(body);
-            return;
+            break;
         case "SubscriptionUnsubscribed":
             // TODO: AFAIK we are not sending this webhook yet
-            return;
-        default:
-            return;
+            break;
+        case "TransferProcessed":
+            handleTransferProcessed(body);
+            break;
+        case "LatePayment":
+            // TODO
+            break;
     }
 }
