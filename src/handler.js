@@ -1,4 +1,4 @@
-import { handleTransferProcessed } from "./transferProcessed.js";
+import { handleTransferProcessed } from "./transfer-processed.js";
 import { handleSignup } from "./signup.js";
 import { verifyWebhook } from "loop-sdk";
 
