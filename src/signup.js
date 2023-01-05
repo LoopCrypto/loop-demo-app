@@ -1,4 +1,4 @@
-import { signSendTransfer, sendTransfers, signTransfer } from "loop-sdk";
+import { loop } from "loop-sdk";
 import { frequencyUnitToSeconds, currentSeconds } from "./utils.js";
 
 export async function handleSignup(eventBody) {
@@ -22,7 +22,7 @@ export async function handleSignup(eventBody) {
         (parseFloat(agreementAmount) + parseFloat(addOnTotalAmount)) * 100;
 
     // Send first transfer request
-    const result = signSendTransfer({
+    const result = loop.signSendTransfer({
         invoiceId: `${email}-${plan}-${addOnPlans}-0`,
         itemId: planId,
         fromAddress: subscriber,
@@ -47,7 +47,7 @@ export async function handleSignup(eventBody) {
         for (let i = 1; i <= 5; i++) {
             const invoiceId = `${email}-${plan}-${i}`;
             const billingAmount = parseFloat(agreementAmount) * 100;
-            const signature = await signTransfer({
+            const signature = await loop.signTransfer({
                 invoiceId: invoiceId,
                 fromAddress: subscriber,
                 toAddress: toAddress,
@@ -69,7 +69,7 @@ export async function handleSignup(eventBody) {
                 signature: signature,
             });
         }
-        const recurringTransfers = sendTransfers(transfers);
+        const recurringTransfers = loop.sendTransfers(transfers);
         console.log(await recurringTransfers);
     }
 }

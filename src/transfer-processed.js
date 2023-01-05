@@ -1,25 +1,44 @@
+import { loop } from "loop-sdk";
+
 export async function handleTransferProcessed(eventBody) {
     // TODO: Add Invoice ID to webhook
-    // TODO: The naming of event args between different webhook events are not very consistent
     const {
-        paymentId, // Transfer ID (probably should unify the naming)
+        paymentId,
         tokenSymbol,
-        endUser, // Wallet address of the user
+        endUser,
         email,
         success,
         reason,
         amountPaid,
-        transaction, // tx ID of the payment
+        transaction,
     } = eventBody;
 
     if (success) {
         console.log(`Transfer ${paymentId} processed, txid: ${transaction}`);
-        console.log(`User email: ${email} from wallet: ${endUser}`);
+        console.log(`User email: ${email} from payment wallet: ${endUser}`);
         console.log(`Amount: ${amountPaid} ${tokenSymbol}`);
     } else {
         // TODO: handle common failure reasons here (need documentation)
+        console.log(`Transfer ${paymentId} failed. Reason: ${reason}`);
+
+        // TODO: once we have better functionality of getTransfer,
+        // we can just get it by ID instead of filtering all results
+        const transfer = loop
+            .getTransfers()
+            .find((transfer) => transfer.id === paymentId);
         // Note: To retry processing transfer, you will need to submit a
         // transfer with a different invoice ID.
-        console.log(`Transfer ${paymentId} failed. Reason: ${reason}`);
+        if (!transfer.invoiceId.endsWith("retry")) {
+            const result = loop.signSendTransfer({
+                invoiceId: `${transfer.invoiceId}-retry`,
+                itemId: transfer.planId,
+                fromAddress: transfer.fromAddress,
+                toAddress: transfer.toAddress,
+                tokenAddress: transfer.token,
+                amount: transfer.amount,
+                usd: transfer.usd,
+            });
+            console.log(await result);
+        }
     }
 }

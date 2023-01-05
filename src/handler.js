@@ -1,10 +1,12 @@
 import { handleTransferProcessed } from "./transfer-processed.js";
 import { handleSignup } from "./signup.js";
-import { verifyWebhook } from "loop-sdk";
+import { handleCancel } from "./cancel.js";
+import { handleLatePayment } from "./late-payment.js";
+import { loop } from "loop-sdk";
 
 export async function incoming(event, context, callback) {
     const signature = event.headers["loop-signature"];
-    const validWebhook = verifyWebhook(event.body, signature);
+    const validWebhook = loop.verifyWebhook(event.body, signature);
     if (!validWebhook) {
         throw new Error("Invalid request signature");
     }
@@ -19,17 +21,19 @@ export async function incoming(event, context, callback) {
     }
 
     switch (webhookType) {
+        // TODO: rename to AgreementSignedUp once backend webhook
+        // is renamed
         case "SubscriptionSignedUp":
             handleSignup(body);
             break;
-        case "SubscriptionUnsubscribed":
-            // TODO: AFAIK we are not sending this webhook yet
+        case "AgreementCancelled":
+            handleCancel(body);
             break;
         case "TransferProcessed":
             handleTransferProcessed(body);
             break;
         case "LatePayment":
-            // TODO
+            handleLatePayment(body);
             break;
     }
 }
