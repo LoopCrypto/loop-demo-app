@@ -1,4 +1,4 @@
-import { loop } from "loop-sdk";
+import { loop } from "@loop-crypto/loop-sdk";
 import { frequencyUnitToSeconds, currentSeconds } from "./utils.js";
 
 export async function handleSignup(eventBody) {

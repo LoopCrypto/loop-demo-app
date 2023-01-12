@@ -10,7 +10,7 @@
     "author": "Michelle Fang",
     "license": "ISC",
     "dependencies": {
-        "loop-sdk": "file:.yalc/loop-sdk"
+        "@loop-crypto/loop-sdk": "file:.yalc/@loop-crypto/loop-sdk"
     },
     "devDependencies": {
         "serverless": "^3.26.0",

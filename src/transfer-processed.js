@@ -1,10 +1,10 @@
-import { loop } from "loop-sdk";
+import { loop } from "@loop-crypto/loop-sdk";
 
 export async function handleTransferProcessed(eventBody) {
     // TODO: Add Invoice ID to webhook
     const {
-        paymentId,
-        tokenSymbol,
+        transferId,
+        paymentTokenSymbol,
         endUser,
         email,
         success,
@@ -14,18 +14,15 @@ export async function handleTransferProcessed(eventBody) {
     } = eventBody;
 
     if (success) {
-        console.log(`Transfer ${paymentId} processed, txid: ${transaction}`);
+        console.log(`Transfer ${transferId} processed, txid: ${transaction}`);
         console.log(`User email: ${email} from payment wallet: ${endUser}`);
-        console.log(`Amount: ${amountPaid} ${tokenSymbol}`);
+        console.log(`Amount: ${amountPaid} ${paymentTokenSymbol}`);
     } else {
-        // TODO: handle common failure reasons here (need documentation)
-        console.log(`Transfer ${paymentId} failed. Reason: ${reason}`);
+        console.log(`Transfer ${transferId} failed. Reason: ${reason}`);
 
-        // TODO: once we have better functionality of getTransfer,
-        // we can just get it by ID instead of filtering all results
-        const transfer = loop
-            .getTransfers()
-            .find((transfer) => transfer.id === paymentId);
+        const transfer = (
+            await loop.getTransfers({ transferId: transferId })
+        )[0];
         // Note: To retry processing transfer, you will need to submit a
         // transfer with a different invoice ID.
         if (!transfer.invoiceId.endsWith("retry")) {

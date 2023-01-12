@@ -2,7 +2,7 @@ import { handleTransferProcessed } from "./transfer-processed.js";
 import { handleSignup } from "./signup.js";
 import { handleCancel } from "./cancel.js";
 import { handleLatePayment } from "./late-payment.js";
-import { loop } from "loop-sdk";
+import { loop } from "@loop-crypto/loop-sdk";
 
 export async function incoming(event, context, callback) {
     const signature = event.headers["loop-signature"];
@@ -21,9 +21,7 @@ export async function incoming(event, context, callback) {
     }
 
     switch (webhookType) {
-        // TODO: rename to AgreementSignedUp once backend webhook
-        // is renamed
-        case "SubscriptionSignedUp":
+        case "AgreementSignedUp":
             handleSignup(body);
             break;
         case "AgreementCancelled":
