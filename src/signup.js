@@ -1,5 +1,5 @@
 import { loop } from "@loop-crypto/loop-sdk";
-import { frequencyUnitToSeconds, currentSeconds } from "./utils.js";
+import { currentSeconds } from "./utils.js";
 
 export async function handleSignup(eventBody) {
     // This is your loop contract receive address
@@ -41,8 +41,10 @@ export async function handleSignup(eventBody) {
         // This is optional and up to you on how you want to handle the
         // subsequent transfer requests.
         const firstBillDate = currentSeconds();
-        const billingPeriodSeconds =
-            frequencyNumber * frequencyUnitToSeconds(frequencyUnit);
+        const billingPeriodSeconds = loop.utils.billingPeriodInSeconds(
+            frequencyNumber,
+            frequencyUnit
+        );
         if (billingPeriodSeconds > 0) {
             const transfers = [];
             for (let i = 1; i <= 5; i++) {
