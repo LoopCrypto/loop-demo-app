@@ -1,0 +1,32 @@
+service: loop-aws-node-demo-app
+
+custom:
+    stage: ${opt:stage, 'offline'}
+
+    serverless-offline:
+        httpPort: 4003
+        noPrependStageInUrl: true
+
+useDotenv: true
+
+provider:
+    name: aws
+    runtime: nodejs16.x
+    region: us-east-1
+
+package:
+    include:
+        - node_modules/**
+    exclude:
+        - package.json
+
+plugins:
+    - serverless-offline
+
+functions:
+    webhook-handler:
+        handler: src/handler.incoming
+        events:
+            - http:
+                  path: loop/webhook
+                  method: post
