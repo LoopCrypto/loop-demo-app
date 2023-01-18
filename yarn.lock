@@ -1359,10 +1359,10 @@
   resolved "https://registry.yarnpkg.com/@kwsites/promise-deferred/-/promise-deferred-1.1.1.tgz#8ace5259254426ccef57f3175bc64ed7095ed919"
   integrity sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==
 
-"@loop-crypto/loop-sdk@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@loop-crypto/loop-sdk/-/loop-sdk-0.1.1.tgz#b7b5ad5891d17f3fa41ca9de0bb53e645ee80773"
-  integrity sha512-U7H7u3J2KM27KxWkoGaLIs9FVqMOV4MqhVM1n8dRWc7gGB8t6oKSBTitCEQfrrTwLFlv9NAUlj17ZoZWagmSKQ==
+"@loop-crypto/loop-sdk@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@loop-crypto/loop-sdk/-/loop-sdk-0.1.2.tgz#95304baba2e392d823296ab68b37216981bd9478"
+  integrity sha512-dt0UbXH2cedvUJOLdjzTSx1995nzJMPjVDa7Wz3wTrnjatvlwt+91HtsXtPKePwxK0HFEwlJSVEJ3Ia6NhBD2Q==
   dependencies:
     crypto-js "^4.1.1"
     dotenv "^16.0.3"
@@ -4269,6 +4269,13 @@ serverless-offline@^12.0.3:
     p-retry "^5.1.2"
     velocityjs "^2.0.6"
     ws "^8.11.0"
+
+serverless-prune-plugin@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/serverless-prune-plugin/-/serverless-prune-plugin-2.0.1.tgz#c50d408a2e6f89ce1e72e0bb8ea3c914be1e67d9"
+  integrity sha512-fWttDV5TD3K6g9NRDJUuA/cq0AzAI0ya1FZXQKtCnWFfaGP7CzZHZWzlvnNofqvKdpY8vXtaAiswc6gdHXaTUw==
+  dependencies:
+    bluebird "^3.7.2"
 
 serverless@^3.26.0:
   version "3.26.0"
