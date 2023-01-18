@@ -31,12 +31,6 @@ provider:
             - ${file(./stages/${self:custom.stage}.yml):subnetId2}
             - ${file(./stages/${self:custom.stage}.yml):subnetId3}
 
-package:
-    include:
-        - node_modules/**
-    exclude:
-        - package.json
-
 plugins:
     - serverless-offline
 
