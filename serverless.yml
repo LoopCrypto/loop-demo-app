@@ -7,18 +7,29 @@ custom:
         httpPort: 4003
         noPrependStageInUrl: true
 
+    prune:
+        automatic: true
+        number: ${file(./stages/${self:custom.stage}.yml):prune}
+        verbose: true
+
 useDotenv: true
 
 provider:
     name: aws
     runtime: nodejs16.x
-    region: us-east-1
-
-package:
-    include:
-        - node_modules/**
-    exclude:
-        - package.json
+    region: us-east-2
+    environment: ${file(./stages/${self:custom.stage}.yml):environment}
+    timeout: 400
+    logRetentionInDays: 30
+    logs:
+        httpApi: true
+    vpc:
+        securityGroupIds:
+            - ${file(./stages/${self:custom.stage}.yml):securityGroupId}
+        subnetIds:
+            - ${file(./stages/${self:custom.stage}.yml):subnetId1}
+            - ${file(./stages/${self:custom.stage}.yml):subnetId2}
+            - ${file(./stages/${self:custom.stage}.yml):subnetId3}
 
 plugins:
     - serverless-offline

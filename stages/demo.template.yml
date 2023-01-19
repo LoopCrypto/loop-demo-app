@@ -1,0 +1,13 @@
+region: "us-east-2"
+securityGroupId: "sg-"
+subnetId1: "subnet-"
+subnetId2: "subnet-"
+subnetId3: "subnet-"
+environment:
+    LOOP_CONTRACT_NETWORK_ID: ""
+    LOOP_CONTRACT_ADDRESS: ""
+    LOOP_API_ID: ""
+    LOOP_SIGNER_KEY: ""
+    LOOP_WEBHOOK_SECRET: ""
+    LOOP_API_KEY: ""
+    LOOP_API_URL: ""

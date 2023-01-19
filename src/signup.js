@@ -23,7 +23,7 @@ export async function handleSignup(eventBody) {
 
     // Send first transfer request
     try {
-        const result = loop.signSendTransfer({
+        const result = await loop.signSendTransfer({
             invoiceId: `${email}-${plan}-${addOnPlans}-0`,
             itemId: planId,
             fromAddress: subscriber,
@@ -32,7 +32,7 @@ export async function handleSignup(eventBody) {
             amount: totalFirstBillingAmountCents,
             usd: true,
         });
-        console.log(await result);
+        console.log(result);
 
         // In this example, we also send out the next 5 transfer requests
         // if a recurring payment is required, in addition to the initial
@@ -72,10 +72,11 @@ export async function handleSignup(eventBody) {
                     signature: signature,
                 });
             }
-            const recurringTransfers = loop.sendTransfers(transfers);
-            console.log(await recurringTransfers);
+            const recurringTransfers = await loop.sendTransfers(transfers);
+            console.log(recurringTransfers);
         }
     } catch (e) {
+        console.log("Signup handler failed!");
         console.log(e);
     }
 }

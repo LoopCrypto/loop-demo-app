@@ -4,17 +4,20 @@
     "description": "Demo app for integrating with Loop payments",
     "main": "src/handler.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "deploy:demo": "serverless deploy --stage demo",
+        "remove:demo": "serverless remove --stage demo",
+        "prune:demo": "sls prune -n 5 --stage demo --verbose"
     },
     "type": "module",
     "author": "Michelle Fang",
     "license": "ISC",
     "dependencies": {
         "-": "^0.0.1",
-        "@loop-crypto/loop-sdk": "^0.1.1"
+        "@loop-crypto/loop-sdk": "^0.1.4"
     },
     "devDependencies": {
         "serverless": "^3.26.0",
-        "serverless-offline": "^12.0.3"
+        "serverless-offline": "^12.0.3",
+        "serverless-prune-plugin": "^2.0.1"
     }
 }

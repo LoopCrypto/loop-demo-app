@@ -3,3 +3,5 @@ package-lock.json
 .env
 yalc.lock
 .yalc/
+.serverless
+stages/demo.yml
