@@ -14,14 +14,18 @@ export async function incoming(event, context, callback) {
 
         const body = JSON.parse(event.body);
         const { event: webhookType, networkId, contractAddress } = body;
+        console.log(`Handling incoming webhook event: ${webhookType}`);
+
         if (networkId != process.env.LOOP_CONTRACT_NETWORK_ID) {
             throw new Error("Mismatched network ID");
         }
-        if (contractAddress != process.env.LOOP_CONTRACT_ADDRESS) {
-            throw new Error("Mismatched contract address");
+        if (
+            contractAddress.toLowerCase() !==
+            process.env.LOOP_CONTRACT_ADDRESS.toLowerCase()
+        ) {
+            throw new Error(`Mismatched contract address: ${contractAddress}`);
         }
 
-        console.log(`Handling incoming webhook event: ${webhookType}`);
         switch (webhookType) {
             case "AgreementSignedUp":
                 await handleSignup(body);
