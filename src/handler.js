@@ -21,20 +21,22 @@ export async function incoming(event, context, callback) {
             throw new Error("Mismatched contract address");
         }
 
+        console.log(`Handling incoming webhook event: ${webhookType}`);
         switch (webhookType) {
             case "AgreementSignedUp":
-                handleSignup(body);
+                await handleSignup(body);
                 break;
             case "AgreementCancelled":
-                handleCancel(body);
+                await handleCancel(body);
                 break;
             case "TransferProcessed":
-                handleTransferProcessed(body);
+                await handleTransferProcessed(body);
                 break;
             case "LatePayment":
-                handleLatePayment(body);
+                await handleLatePayment(body);
                 break;
         }
+        console.log("Handler finished");
     } catch (error) {
         console.log(`Demo app handler failed. Error: ${error}`);
     }

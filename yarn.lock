@@ -1359,10 +1359,10 @@
   resolved "https://registry.yarnpkg.com/@kwsites/promise-deferred/-/promise-deferred-1.1.1.tgz#8ace5259254426ccef57f3175bc64ed7095ed919"
   integrity sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==
 
-"@loop-crypto/loop-sdk@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@loop-crypto/loop-sdk/-/loop-sdk-0.1.2.tgz#95304baba2e392d823296ab68b37216981bd9478"
-  integrity sha512-dt0UbXH2cedvUJOLdjzTSx1995nzJMPjVDa7Wz3wTrnjatvlwt+91HtsXtPKePwxK0HFEwlJSVEJ3Ia6NhBD2Q==
+"@loop-crypto/loop-sdk@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@loop-crypto/loop-sdk/-/loop-sdk-0.1.4.tgz#a2ef90df82381546751d2990e11e8e028b2ddf80"
+  integrity sha512-Ya/NDMzSN6OUNnhxD3+OUpMkpTlQt6pNbjqOU//0hJ6ofVDBYU6ZwlgjwePPCkLkpZgH+hFFOtOn8f46YJ7C4w==
   dependencies:
     crypto-js "^4.1.1"
     dotenv "^16.0.3"
