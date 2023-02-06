@@ -5,9 +5,9 @@ export async function handleSignup(eventBody) {
     // This is your loop contract receive address
     const toAddress = "0x1BE57B0C6dcCA24D7E16b9b8ed986D759e2A80F9";
     const {
-        plan,
-        addOnPlans,
-        planId,
+        item,
+        addOnItems,
+        itemId,
         paymentTokenAddress,
         email,
         subscriber,
@@ -24,8 +24,8 @@ export async function handleSignup(eventBody) {
     // Send first transfer request
     try {
         const result = await loop.signSendTransfer({
-            invoiceId: `${email}-${plan}-${addOnPlans}-0`,
-            itemId: planId,
+            invoiceId: `${email}-${item}-${addOnItems}-0`,
+            itemId: itemId,
             fromAddress: subscriber,
             toAddress: toAddress,
             tokenAddress: paymentTokenAddress,
@@ -48,7 +48,7 @@ export async function handleSignup(eventBody) {
         if (billingPeriodSeconds > 0) {
             const transfers = [];
             for (let i = 1; i <= 5; i++) {
-                const invoiceId = `${email}-${plan}-${i}`;
+                const invoiceId = `${email}-${item}-${i}`;
                 const billingAmount = parseFloat(agreementAmount) * 100;
                 const signature = await loop.signTransfer({
                     invoiceId: invoiceId,
@@ -67,7 +67,7 @@ export async function handleSignup(eventBody) {
                     token: paymentTokenAddress,
                     usd: true,
                     networkId: parseInt(process.env.LOOP_CONTRACT_NETWORK_ID),
-                    planId: planId,
+                    itemId: itemId,
                     billDate: firstBillDate + billingPeriodSeconds * i,
                     signature: signature,
                 });

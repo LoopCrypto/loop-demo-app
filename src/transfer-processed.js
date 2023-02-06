@@ -29,7 +29,7 @@ export async function handleTransferProcessed(eventBody) {
             if (!transfer.invoiceId.endsWith("retry")) {
                 const result = loop.signSendTransfer({
                     invoiceId: `${transfer.invoiceId}-retry`,
-                    itemId: transfer.planId,
+                    itemId: transfer.itemId,
                     fromAddress: transfer.fromAddress,
                     toAddress: transfer.toAddress,
                     tokenAddress: transfer.token,
